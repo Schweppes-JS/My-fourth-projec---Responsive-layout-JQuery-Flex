@@ -1,202 +1,155 @@
-$('.nav-bar-main a').on('click', function() {
-	$('.nav-bar-main a').removeClass('active');
-	$(this).addClass('active');
-})
+const slider = document.querySelector('.slider');
+const leftArrow = document.querySelector('.left');
+const rightArrow = document.querySelector('.right');const plates = document.querySelectorAll('.plate');
+const ourMenu = document.querySelector('#our-menu');
+const atmosphereTitle = document.querySelector('#atmosphere-title');
+const exposition = document.querySelector('.exposition');
+const founder = document.querySelector('.founder');
+const servicesBtn = document.querySelector('#services-button');
+const pizzasTitle = document.querySelector('#pizzas-title');
+const dishes = document.querySelectorAll('.dish');
+const dishTitle = document.querySelector('#best-dish-title')
+const saladTitle = document.querySelector('#salad-title');
+const contactBtn = document.querySelector('#contact-button');
+const commentsTitle = document.querySelector('#comments-title');
 
+let plateEven = [];
+let plateOdd = [];
 
-let slider = $('.slider');
-let viewer = $('.viewer');
-let slogan = $('.slogan h1');
-let description = $('.description p');
-let menuButton = $('.menu-btn a');
-let atmosphere = $('.atmosphere');
-let atmosphereBG = $('.atmosphere img');
-$(window).on('load', function() {
-	slider.css({
-		"height": viewer.css("height")
-	});
-	atmosphere.css({
-		"height": atmosphereBG.css("height")
-	});
-	let textChange = setInterval (textAnimation, 5500);
-	function textAnimation () {
-		slogan.each(function () {
-			if ($(this).hasClass('animated-up')) {
-				$(this).removeClass('animated-up');
-				$(this).addClass('hide');
-			}
-			else {
-				$(this).removeClass('hide');
-				$(this).addClass('animated-up');
-			}
-		})
-		description.each(function () {
-			if ($(this).hasClass('animated-left')) {
-				$(this).removeClass('animated-left');
-				$(this).addClass('hide');
-			}
-			else {
-				$(this).removeClass('hide');
-				$(this).addClass('animated-left');
-			}
-		})
-		menuButton.each(function () {
-			if ($(this).hasClass('animated-link')) {
-				$(this).removeClass('animated-link');
-				$(this).addClass('hide');
-			}
-			else {
-				$(this).removeClass('hide');
-				$(this).addClass('animated-link');
-			}
-		})
-	}
-});
-$(window).resize(function() {
-	slider.css({
-		"height": viewer.css("height")
-	});
-	atmosphere.css({
-		"height": atmosphereBG.css("height")
-	});
-});
+let dishEven = [];
+let dishOdd = [];
 
+// splitting array on even and odd index
+plates.forEach((plate, index) => index  % 2 == 0 ? plateEven.push(plate) : plateOdd.push(plate));
+dishes.forEach((dish, index) => index  % 2 == 0 ? dishEven.push(dish) : dishOdd.push(dish));
 
-let leftArrow = $('.left');
-let rightArrow = $('.right');
-let arrows = $('.arrow');
-let slide = $('.slide');
-function switchImg (){
-	if ($(this).hasClass('viewer')) {
-		let previewIndex = slide.index(this) - 1;
-		if (previewIndex < 0) {
-			previewIndex = slide.length - 1;
+// Array of pizza's images
+const imgArr = [
+	'slide-1-1920x753.png',
+	'slide-2-1920x753.png',
+	'slide-3-1920x753.png',
+	'slide-4-1920x753.png'
+]
+
+// changing image under arrows when you click to previous pizza
+function previousArrowImg() {
+	const currentUrl = slider.getAttribute('style').split('img/')[1].split('")')[0];
+	for (let i = 0; i < imgArr.length; i++) {
+		if (currentUrl === imgArr[i]) {
+			if (i < imgArr.length - 1 && i != 0) { 
+				rightArrow.children[2].setAttribute('src', `img/${imgArr[i+1]}`);
+				leftArrow.children[2].setAttribute('src', `img/${imgArr[i-1]}`);
+			}
+			else if (i == 0) { // if you are at the start of an array
+				rightArrow.children[2].setAttribute('src', `img/${imgArr[i+1]}`);
+				leftArrow.children[2].setAttribute('src', `img/${imgArr[imgArr.length - 1]}`);
+			}
+			else  { // if you are at the end of an array
+				rightArrow.children[2].setAttribute('src', `img/${imgArr[0]}`);
+				leftArrow.children[2].setAttribute('src', `img/${imgArr[i-1]}`);
+			}
+			break;
 		}
-		let nextIndex = slide.index(this) + 1;
-		if (nextIndex > slide.length - 1) {
-			nextIndex = 0;
-		}
-		leftArrow.children('.before')[0].attributes.src.textContent = slide[previewIndex].attributes.src.textContent;
-		rightArrow.children('.before')[0].attributes.src.textContent = slide[nextIndex].attributes.src.textContent;
 	}
 }
-slide.each(switchImg);
-arrows.on('click', function() {
-	let nextSlide = $(this).children('.before').attr('src');
-	slide.removeClass('viewer');
-	slide.each(function() {
-		if ($(this).attr('src') == nextSlide) {
-			$(this).addClass('viewer');
-			slide.each(switchImg);
-		}
-	})
-});
 
+// Set previous image as main
+function previousImg() {
+	const currentImg = getComputedStyle(slider).backgroundImage.split('img/')[1].split('")')[0];
+	for (let i = 0; i < imgArr.length; i++) {
+		if (currentImg === imgArr[i]) {
+			if (i == 0) { // if you are at the end of an array
+				slider.style.backgroundImage = `url(../img/${imgArr[imgArr.length-1]})`; 
+			} else {
+				slider.style.backgroundImage = `url(../img/${imgArr[i-1]})`;
+			}
+			previousArrowImg();
+			break;
+		}
+	}
+}
 
-let plateEven = $('.plate:even');
-let plateOdd = $('.plate:odd');
-let ourMenu = $('.menu-container h1');
-let slogan2 = $('.atmosphere-text h3');
-let slogan3 = $('.pizzas h1');
-let exposition = $('.exposition');
-let founder = $('.founder');
-let atmoBtn = $('.atmosphere-text a');
-let dish = $('.dish');
-let slogan4 = $('.best-dish-text h2');
-let salad = $('.best-dish-text p');
-let bestDishBtn = $('.best-dish-text a');
-let slogan5 = $('.comments h1');
-$(window).on('load', function(){
-	ourMenu.each(function() {
-		let ourMenuPosition = $(this).offset().top;
-		let topOfWindow = $(window).scrollTop() + $(window).height();
-		if (ourMenuPosition < topOfWindow - 20) {
-			$(this).addClass('slideOutDown');
+// changing image under arrows when you click to next pizza
+function nextArrowImg() {
+	const currentUrl = slider.getAttribute('style').split('img/')[1].split('")')[0];
+	for (let i = 0; i < imgArr.length; i++) {
+		if (currentUrl === imgArr[i]) {
+			if (i < imgArr.length - 1 && i != 0) { 
+				rightArrow.children[2].setAttribute('src', `img/${imgArr[i+1]}`);
+				leftArrow.children[2].setAttribute('src', `img/${imgArr[i-1]}`);
+			}
+			else if (i == imgArr.length - 1) { // if you are at the end of an array
+				rightArrow.children[2].setAttribute('src', `img/${imgArr[0]}`);
+				leftArrow.children[2].setAttribute('src', `img/${imgArr[i-1]}`);
+			}
+			else { // if you are at the start of an array
+				rightArrow.children[2].setAttribute('src', `img/${imgArr[i+1]}`);
+				leftArrow.children[2].setAttribute('src', `img/${imgArr[imgArr.length - 1]}`);
+			}
+			break;
 		}
-	})
-	plateEven.each(function() {
-		let evenPosition = $(this).offset().top;
-		let topOfWindow = $(window).scrollTop() + $(window).height();
-		if (evenPosition < topOfWindow - 20) {
-			$(this).addClass('slideOutDown');
-		}
-	})
-	plateOdd.each(function() {
-		let oddPosition = $(this).offset().top;
-		let topOfWindow = $(window).scrollTop() + $(window).height();
-		if (oddPosition < topOfWindow - 20) {
-			$(this).addClass('slideOutUp');
-		}
-	})
-})
-$(window).scroll( function () {
-	ourMenu.each(function() {
-		let ourMenuPosition = $(this).offset().top;
-		let topOfWindow = $(window).scrollTop() + $(window).height();
-		if (ourMenuPosition < topOfWindow - 20) {
-			$(this).addClass('slideOutDown');
-		}
-	})
-	plateEven.each(function() {
-		let evenPosition = $(this).offset().top;
-		let topOfWindow = $(window).scrollTop() + $(window).height();
-		if (evenPosition < topOfWindow - 20) {
-			$(this).addClass('slideOutDown');
-		}
-	})
-	plateOdd.each(function() {
-		let oddPosition = $(this).offset().top;
-		let topOfWindow = $(window).scrollTop() + $(window).height();
-		if (oddPosition < topOfWindow - 20) {
-			$(this).addClass('slideOutUp');
-		}
-	})
-	let slogan2Position = slogan2.offset().top;
-	let topOfWindow = $(window).scrollTop() + $(window).height();
-	if (slogan2Position < topOfWindow - 20) {
-		slogan2.addClass('slideOutDown');
 	}
-	let expositionPosition = exposition.offset().top;
-	if (expositionPosition < topOfWindow - 20) {
-		exposition.addClass('slideOutLeft');
-	}
-	let founderPosition = founder.offset().top;
-	if (founderPosition < topOfWindow - 20) {
-		founder.addClass('slideOutRight');
-	}
-	let atmoBtnPosition = atmoBtn.offset().top;
-	if (atmoBtnPosition < topOfWindow - 20) {
-		atmoBtn.addClass('slideOutUp');
-	}
-	let slogan3Position = slogan3.offset().top;
-	if (slogan3Position < topOfWindow - 20) {
-		slogan3.addClass('slideOutUp');
-	}
-	dish.each(function () {
-		let dishPosition = $(this).offset().top;
-		let topOfWindow = $(window).scrollTop() + $(window).height();
-		if (dishPosition < topOfWindow - 20) {
-			$(this).addClass('slideOutRight');
-		}
-	})
-	let slogan4Position = slogan4.offset().top;
-	if (slogan4Position < topOfWindow - 20) {
-		slogan4.addClass('slideOutLeft');
-	}
-	let saladPosition = salad.offset().top;
-	if (saladPosition < topOfWindow - 20) {
-		salad.addClass('slideOutUp');
-	}
-	let bestDishBtnPosition = bestDishBtn.offset().top;
-	if (bestDishBtnPosition < topOfWindow - 20) {
-		bestDishBtn.addClass('slideOutRight');
-	}
-	let slogan5Position = slogan5.offset().top;
-	if (slogan5Position < topOfWindow - 20) {
-		slogan5.addClass('slideOutRight');
-	}
-});
+}
 
+// Set next image as main
+function nextImg() {
+	const currentImg = getComputedStyle(slider).backgroundImage.split('img/')[1].split('")')[0];
+	for (let i = 0; i < imgArr.length; i++) {
+		if (currentImg === imgArr[i]) {
+			if (i < imgArr.length - 1) {
+				slider.style.backgroundImage = `url(../img/${imgArr[i+1]})`;
+			} else { // if you are at the end of an array
+				slider.style.backgroundImage = `url(../img/${imgArr[0]})`;
+			}
+			nextArrowImg();
+			break;
+		}
+	}
+}
+
+// Event listeners for button
+rightArrow.addEventListener('click', nextImg);
+leftArrow.addEventListener('click', previousImg);
+
+// Functions that are starting animation
+function animation(element, animationName) {
+	if (!element.classList.contains(animationName)) { // checking whether to run the animation
+		if ((window.innerHeight + window.scrollY) > element.offsetTop - 20) { // starting animation if your window lower than position of element
+			element.classList.add(animationName);
+		}
+	}
+}
+
+function doubleAnimation(firstElement, secondElement, firstAnimation, secondAnimation) {
+	if (!firstElement[0].classList.contains(firstAnimation)) {
+		if ((window.innerHeight + window.scrollY) > firstElement[0].offsetTop - 20) {
+			firstElement.forEach((elem) => elem.classList.add(firstAnimation));
+			secondElement.forEach((elem) => elem.classList.add(secondAnimation));
+		}
+	}
+
+}
+
+// function that is starting on scroll
+function launchAnimations() {
+	animation(ourMenu, 'slideOutDown');
+	doubleAnimation(plateEven, plateOdd, 'slideOutDown', 'slideOutUp');
+	animation(atmosphereTitle, 'slideOutDown');
+	animation(exposition, 'slideOutLeft');
+	animation(founder, 'slideOutRight');
+	animation(servicesBtn, 'slideOutUp');
+	animation(pizzasTitle, 'slideOutUp');
+	doubleAnimation(dishEven, dishOdd, 'slideOutRight', 'slideOutLeft');
+	animation(dishTitle, 'slideOutLeft');
+	animation(saladTitle, 'slideOutUp');
+	animation(contactBtn, 'slideOutRight');
+	animation(commentsTitle, 'slideOutRight')
+}
+
+// Event listeners for animations
+window.addEventListener('scroll', launchAnimations);
+
+// jQuery carousel
 var owl = $('.owl-carousel');
 owl.owlCarousel({
     items:3,

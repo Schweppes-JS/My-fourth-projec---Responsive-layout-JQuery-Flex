@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="style/fonts.css">
 	<link rel="stylesheet" href="style/style.css">
 	<link rel="stylesheet" href="style/owl.carousel.min.css">
+	<link rel="icon" type="image/png" href="https://img.icons8.com/cotton/64/000000/pizza--v3.png">
 	<script type="text/javascript" src="js/jquery-3.4.1.min.js" defer></script>
 	<script type="text/javascript" src="js/owl.carousel.min.js" defer></script>
 	<script type="text/javascript" src="js/script.js" defer></script>
@@ -55,40 +56,35 @@
 	</header>
 	<section>
 		<div class="slider">
-				<img class="slide viewer" src="img/slide-1-1920x753.png" alt="">
-				<img class="slide" src="img/slide-2-1920x753.png" alt="">
-				<img class="slide" src="img/slide-4-1920x753.png" alt="">
-				<img class="slide" src="img/slide-3-1920x753.png" alt="">
 				<div class="arrow left">
 					<i class="fad fa-arrow-left"></i>
-					<div class="after"></div>
-					<img class="before" src="img/slide-4-1920x753.png" alt=""></img>
+					<div class="arrow-container"></div>
+					<img class="background-container" id="previous-pizza" src="img/slide-2-1920x753.png" alt=""></img>
 				</div>
 				<div class="arrow right">
 					<i class="fad fa-arrow-right"></i>
-					<div class="after"></div>
-					<img class="before" src="img/slide-2-1920x753.png" alt=""></img>
+					<div class="arrow-container"></div>
+					<img class="background-container" id="next-pizza" src="img/slide-4-1920x753.png" alt=""></img>
 				</div>
 				<div class="popup-container">
 					<div class="popup-text">
 						<div class="slogan">
-							<h1 class="animated-up">Perfect<br>pizza</h1>
-							<h1 class="hide">Quality<br>ingredien</h1>
+							<h1 class="first-slogan">Perfect<br>pizza</h1>
+							<h1 class="second-slogan">Quality<br>ingredien</h1>
 						</div>
 						<div class="description">
-							<p class="animated-left">Experience the taste of a perfect pizza at PizzaHouse, one of the best restaurants!</p>
-							<p class="hide">We use only the best ingredients to make one-of-a-kind pizzas for our customers.</p>
+							<p class="first-description">Experience the taste of a perfect pizza at PizzaHouse, one of the best restaurants!</p>
+							<p class="second-description">We use only the best ingredients to make one-of-a-kind pizzas for our customers.</p>
 						</div>
 						<div class="menu-btn">
 							<a class="animated-link" href="#"><span>View our menu</span></a>
-							<a class="hide" href="#"><span>View our menu</span></a>
 						</div>
 					</div>
 				</div>
 		</div>
 		<div class="menu">
 			<div class="menu-container">
-				<h1>Our menu</h1>
+				<h1 id="our-menu">Our menu</h1>
 				<div class="plates-list">
 					<div class="frame">
 						<div class="plate">
@@ -147,19 +143,18 @@
 				</div>
 			</div>
 			<div class="atmosphere">
-				<img src="img/bg-1-1920x503.png" alt="">
 				<div class="atmosphere-container">
 					<div class="atmosphere-text">
-						<h3>Best atmosphere</h3>
+						<h3 id="atmosphere-title">Best atmosphere</h3>
 						<p class="exposition">PizzaHouse is the place of the best pizza and high-quality service.</p>
 						<p class="founder"><span></span> Ben Smith, Founder</p>
-						<a href="#"><span>View our services</span></a>
+						<a id="services-button" href="#"><span>View our services</span></a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="pizzas">
-			<h1>Selected Pizzas</h1>
+			<h1 id="pizzas-title">Selected Pizzas</h1>
 			<div class="products">
 				<div class="dish">
 					<img src="img/product-1-161x162.png" alt="">
@@ -252,15 +247,15 @@
 			<div class="best-dish">
 				<div class="best-dish-container">
 					<div class="best-dish-text">
-						<h2>-30% on all salads & drinks</h2>
-						<p><span></span> Taste some of the best PizzaHouse salads!</p>
-						<a href="#">Contact us</a>
+						<h2 id="best-dish-title">-30% on all salads & drinks</h2>
+						<p id="salad-title"><span></span> Taste some of the best PizzaHouse salads!</p>
+						<a id="contact-button" href="#">Contact us</a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="comments">
-			<h1>What people say</h1>
+			<h1 id="comments-title">What people say</h1>
 			<div class="comments-container">
 				<div class="owl-carousel owl-theme">
 					<div class="item">
